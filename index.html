@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="UTF-8">
+<title>ToDo APP jQuey版</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<style>
+#todo li.line-through {
+    text-decoration: line-through;
+    color: #666;
+}
+</style>
+</head>
+
+<body>
+<input type="text" value="" id="text">
+<ul id="todo"></ul>
+<button id="add">追加</button>
+<script>
+(function() {
+    "use strict";
+
+    /* とりあえず動くver */
+    var Init = function() {
+        // 初期化処理
+    }
+
+    Init.prototype = {
+        add: function() {
+            $("#add").on("click", function() {
+                var text = $("#text").prop("value");
+                var html = "\
+                    <li><span>" + text + "</span>\
+                        <input type='button' id='del' value='del'>\
+                        <input type='button' id='edit' value='edit'>\
+                    </li>";
+                $("#todo").append(html);
+                $("#text").prop("value", "");
+            });
+        },
+        del: function() {
+            $(document).on("click", "#del", function() {
+                $(this).parent("li").remove();
+            });
+        },
+        edit: function() {
+            $(document).on("click", "#edit", function() {
+                var text = $("#text").prop("value");
+                var text = prompt("edit");
+                $(this).parent("li").find("span").text(text);
+            });
+        }
+    }
+
+    var todo = new Init();
+    todo.add();
+    todo.del();
+    todo.edit();
+
+
+}());
+</script>
+</body>
+
+</html>
